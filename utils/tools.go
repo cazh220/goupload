@@ -2,6 +2,7 @@ package utils
 
 import (
 	"crypto/md5"
+	"encoding/base64"
 	"fmt"
 	"os"
 	"strings"
@@ -19,6 +20,10 @@ func Md5Crypt(str string, salt ...interface{}) (CryptStr string) {
 		str = fmt.Sprintf(str+strings.Join(slice, "%v"), salt...)
 	}
 	return fmt.Sprintf("%x", md5.Sum([]byte(str)))
+}
+
+func Base64EnCode(str string) (CryptStr string) {
+	return base64.StdEncoding.EncodeToString([]byte(str))
 }
 
 /**
