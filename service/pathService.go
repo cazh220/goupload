@@ -36,7 +36,7 @@ func DestPath(tp int, prj string, fileName string) string {
 		os.MkdirAll(dir, 777)
 	}
 
-	return dir+"/"+GenerateName(fileName, prj)
+	return (dir+"/"+GenerateName(fileName, prj))[1:]
 }
 
 // 重新生成名字
