@@ -2,11 +2,14 @@ package service
 
 import (
 	"fmt"
+	"go.mongodb.org/mongo-driver/mongo"
 	"goupload/utils"
+	"log"
 	"os"
 	"path/filepath"
 	"strconv"
 	"time"
+	"context"
 )
 
 // 获取上传的目录
@@ -43,8 +46,21 @@ func DestPath(tp int, prj string, fileName string) string {
 func GenerateName(fileName string, prj string) string {
 	suffix := filepath.Ext(fileName)
 	// 获取当前日期毫秒
-	//name := utils.Md5Crypt(strconv.FormatInt(time.Now().UnixNano(), 10), prj, fileName)
-	name := utils.Base64EnCode(strconv.FormatInt(time.Now().UnixNano(), 10))
+	name := utils.Md5Crypt(strconv.FormatInt(time.Now().UnixNano(), 10), prj, fileName)
+	//_tmp := strconv.FormatInt(time.Now().UnixMicro(), 10)
+	//fmt.Println("_tmp", _tmp)
+	//name := utils.Base64EnCode(_tmp+prj+fileName)
+	//fmt.Println("name", name)
 	name += suffix
 	return name
+}
+
+// 插入数据
+func SaveOne(detectionColl *mongo.Collection, detection interface{}) *mongo.InsertOneResult {
+	objId, err := detectionColl.InsertOne(context.TODO(), detection)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return objId
 }

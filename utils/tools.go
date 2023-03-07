@@ -22,6 +22,9 @@ func Md5Crypt(str string, salt ...interface{}) (CryptStr string) {
 	return fmt.Sprintf("%x", md5.Sum([]byte(str)))
 }
 
+/**
+ * base64 编码
+ */
 func Base64EnCode(str string) (CryptStr string) {
 	return base64.StdEncoding.EncodeToString([]byte(str))
 }
