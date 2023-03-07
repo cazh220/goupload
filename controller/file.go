@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -24,7 +25,8 @@ type Files struct {
 }
 
 func init()  {
-	clientOptions := options.Client().ApplyURI("mongodb://192.168.144.128:27017")
+	fmt.Println(123)
+	clientOptions := options.Client().ApplyURI("mongodb://192.168.91.130:27017")
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatal(err)

@@ -4,28 +4,34 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"goupload/routers"
-	"log"
+	"gopkg.in/ini.v1"
+	"os"
 )
 
 type Conf struct {
-	host string
-	port int
+	Host   string
+	Port   string
+	DbHost string
+	DbPort string
+	DbDriver string
+	DbName string
 }
 var conf Conf
 
 func init()  {
-	c, err := config.New(feeder.JsonDirectory{Path: "D:/Go/users/config"})
+	fmt.Println(456)
+	cfg, err := ini.Load("./config/my.ini")
 	if err != nil {
-		log.Println(err)
+		fmt.Printf("Fail to read file: %v", err)
+		os.Exit(1)
 	}
 
-	conf.port, err = c.GetInt("app.port")
-	if err != nil {
-		log.Println(err)
-	}
-
-	fmt.Println(conf.port)
-
+	conf.DbDriver = cfg.Section("db").Key("driver").String()
+	conf.DbHost = cfg.Section("db").Key("host").String()
+	conf.DbName = cfg.Section("db").Key("name").String()
+	conf.DbPort = cfg.Section("db").Key("port").String()
+	conf.Host = cfg.Section("").Key("host").String()
+	conf.Port = cfg.Section("").Key("port").String()
 }
 
 func main() {
@@ -33,7 +39,6 @@ func main() {
 	r := gin.Default()
 	// 注册路由
 	routers.RegisterRouter(r)
-
 	// 监听端口，默认在8080
-	r.Run(":8000")
+	r.Run(":"+conf.Port)
 }
