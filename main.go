@@ -1,9 +1,32 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"goupload/routers"
+	"log"
 )
+
+type Conf struct {
+	host string
+	port int
+}
+var conf Conf
+
+func init()  {
+	c, err := config.New(feeder.JsonDirectory{Path: "D:/Go/users/config"})
+	if err != nil {
+		log.Println(err)
+	}
+
+	conf.port, err = c.GetInt("app.port")
+	if err != nil {
+		log.Println(err)
+	}
+
+	fmt.Println(conf.port)
+
+}
 
 func main() {
 	// 创建路由
