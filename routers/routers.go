@@ -13,6 +13,7 @@ func RouterFile(engine *gin.Engine)  {
 	var group = engine.Group("/file")
 	{
 		group.POST("/upload",controller.FileUpload)
+		group.GET("/list", controller.ViewFiles)
 	}
 }
 

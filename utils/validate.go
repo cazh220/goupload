@@ -1,13 +1,8 @@
 package utils
 
-const (
-	MAX_UPLOAD_FILE_SIZE = 1024 * 1024 * 5000
-)
-
 // 上传文件大小是否已超过限制
 func EnableUploadFileSize(fileSize int64) bool {
-	//fmt.Println("fileSize", fileSize)
-	if fileSize > MAX_UPLOAD_FILE_SIZE {
+	if fileSize > Conf.MaxFileSize {
 		return false
 	}
 	return true

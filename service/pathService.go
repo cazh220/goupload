@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
 	"goupload/utils"
@@ -9,12 +10,16 @@ import (
 	"path/filepath"
 	"strconv"
 	"time"
-	"context"
 )
+
+type List struct {
+	Path string
+	CreateTime string
+}
 
 // 获取上传的目录
 func DestPath(tp int, prj string, fileName string) string {
-	var dir = "./upload"
+	var dir = utils.Conf.FileDir
 	switch tp {
 	case 1:
 		dir += "/videos"
@@ -47,10 +52,6 @@ func GenerateName(fileName string, prj string) string {
 	suffix := filepath.Ext(fileName)
 	// 获取当前日期毫秒
 	name := utils.Md5Crypt(strconv.FormatInt(time.Now().UnixNano(), 10), prj, fileName)
-	//_tmp := strconv.FormatInt(time.Now().UnixMicro(), 10)
-	//fmt.Println("_tmp", _tmp)
-	//name := utils.Base64EnCode(_tmp+prj+fileName)
-	//fmt.Println("name", name)
 	name += suffix
 	return name
 }
