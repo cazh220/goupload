@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -21,6 +22,14 @@ type Files struct {
 func GetFilesList(detectionColl *mongo.Collection, filter bson.D) []*Files  {
 	//filter := bson.D{{"tp", 3}}
 	opts := options.Find().SetSort(bson.D{{"create_time", -1}})
+
+	limit := 1
+	//index := 10
+	if limit > 0 {
+		opts.SetLimit(1)
+		opts.SetSkip(10)
+	}
+	fmt.Println(opts)
 	cur, err := detectionColl.Find(context.TODO(), filter, opts)
 	if err != nil {
 		log.Fatal(err)

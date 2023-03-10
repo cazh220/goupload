@@ -128,8 +128,13 @@ func ViewFiles(context *gin.Context)  {
 		return
 	}
 
-	//filter := bson.D{{"tp", 2}}
 	filter := bson.D{}
+	if files.Tp != 0 {
+		filter = append(filter, bson.E{Key: "tp", Value: files.Tp})
+	}
+	if files.Prj != "" {
+		filter = append(filter, bson.E{Key: "prj", Value: files.Prj})
+	}
 
 	list := model.GetFilesList(dataCollection, filter)
 	context.JSON(http.StatusOK, gin.H{

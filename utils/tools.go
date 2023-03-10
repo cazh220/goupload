@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/base64"
 	"fmt"
+	"go.mongodb.org/mongo-driver/bson"
 	"os"
 	"strings"
 )
@@ -41,4 +42,15 @@ func PathExists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
+}
+
+/**
+ 拼接查询条件
+ */
+func SelCondition(query map[string]string) bson.M  {
+	result := make(bson.M, len(query))
+	for k, v := range query{
+		result[k] = v
+	}
+	return result
 }
