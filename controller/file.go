@@ -12,6 +12,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -93,6 +94,7 @@ func FileUpload(context *gin.Context) {
 		CreateTime: time.Now().Format("2006-01-02 15:04:05"),
 	})
 
+
 	//fmt.Println("resObj", resObj.InsertedID)
 	if resObj.InsertedID == nil {
 		context.JSON(http.StatusOK, gin.H{
@@ -106,7 +108,7 @@ func FileUpload(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "上传成功",
-		"data": fileName[1:],
+		"data": utils.Conf.Url+strings.Replace(fileName[2:], "resource", "storage", 1),
 	})
 }
 

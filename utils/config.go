@@ -11,6 +11,7 @@ import (
 type Config struct {
 	Host   string
 	Port   string
+	Url	string
 	DbHost string
 	DbPort string
 	DbDriver string
@@ -33,6 +34,7 @@ func init() {
 	Conf.DbPort = cfg.Section("db").Key("port").String()
 	Conf.Host = cfg.Section("").Key("host").String()
 	Conf.Port = cfg.Section("").Key("port").String()
+	Conf.Url = cfg.Section("").Key("url").String()
 	Conf.FileDir = cfg.Section("file").Key("dir").String()
 	arr := strings.Split(cfg.Section("file").Key("max_file_size").String(), " * ")
 	a , _ := strconv.Atoi(arr[0])
