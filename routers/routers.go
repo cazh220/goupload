@@ -14,6 +14,9 @@ func RouterFile(engine *gin.Engine)  {
 	{
 		group.POST("/upload",controller.FileUpload)
 		group.GET("/list", controller.ViewFiles)
+		group.GET("/scan", controller.ScanDirs)
 	}
+
+
 }
 

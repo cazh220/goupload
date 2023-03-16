@@ -136,10 +136,17 @@ func ViewFiles(context *gin.Context)  {
 		filter = append(filter, bson.E{Key: "prj", Value: files.Prj})
 	}
 
-	list := model.GetFilesList(dataCollection, filter)
+	var page int64 = 1
+	count := model.GetFilesNum(dataCollection, filter)
+	list := model.GetFilesList(dataCollection, filter, 10, page)
+
 	context.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "查看成功",
-		"data": list,
+		"data": gin.H{
+			"list": list,
+			"total": count,
+			"page": page,
+		},
 	})
 }

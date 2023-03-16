@@ -19,16 +19,15 @@ type Files struct {
 }
 
 // 获取文件列表
-func GetFilesList(detectionColl *mongo.Collection, filter bson.D) []*Files  {
+func GetFilesList(detectionColl *mongo.Collection, filter bson.D, limit int64, page int64) []*Files  {
 	//filter := bson.D{{"tp", 3}}
 	opts := options.Find().SetSort(bson.D{{"create_time", -1}})
 
-	limit := 1
-	//index := 10
+	offset := (page -1)*limit
 	if limit > 0 {
-		opts.SetLimit(1)
-		opts.SetSkip(10)
+		opts = opts.SetLimit(int64(limit)).SetSkip(int64(offset))
 	}
+
 	fmt.Println(opts)
 	cur, err := detectionColl.Find(context.TODO(), filter, opts)
 	if err != nil {
@@ -45,6 +44,17 @@ func GetFilesList(detectionColl *mongo.Collection, filter bson.D) []*Files  {
 	}
 	_ = cur.Close(context.Background())
 	return files
+}
+
+// 获取总数
+func GetFilesNum(detectionColl *mongo.Collection, filter bson.D) int {
+	count, err := detectionColl.CountDocuments(context.TODO(), filter)
+	if err != nil {
+		log.Println(err)
+		return 0
+	}
+
+	return int(count)
 }
 
 
