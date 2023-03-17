@@ -108,7 +108,7 @@ func FileUpload(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "上传成功",
-		"data": utils.Conf.Url+strings.Replace(fileName[2:], "resource", "storage", 1),
+		"data": utils.Conf.Url+strings.Replace(fileName[1:], "resource/storage", "storage", 1),
 	})
 }
 
