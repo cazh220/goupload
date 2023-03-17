@@ -1,4 +1,4 @@
-# 上传服务员
+# 上传文件服务
 
 1. 上传文件
 
@@ -8,9 +8,11 @@ Method: POST
 
 参数： 
 
-file  File
-prj   string  项目  hw 环卫  fl 分类 hs 回收 yf 医废 cc 餐厨
-tp    int   类型1 video 2 picture 3 others
+|参数|类型|注释|
+|:----    |:----    |------      |
+|file| File| 文件上传|
+|prj| string| 项目:hw 环卫;fl 分类;hs 回收;yf 医废;cc 餐厨|
+|tp| int| 类型1 video 2 picture 3 others|
 
 
 2. 查看文件列表
@@ -21,5 +23,7 @@ Method: GET
 
 参数：
 
-tp  int     类型
-prj string  项目
+|参数|类型|注释|
+|:----    |:----    |------      |
+|prj| string| 项目:hw 环卫;fl 分类;hs 回收;yf 医废;cc 餐厨|
+|tp| int| 类型1 video 2 picture 3 others|
